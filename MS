@@ -43,7 +43,29 @@ occupied(Room, no),
 temperature(Room, Temp), 
 Temp < 25.
 
-
+Purifier
+% Disallow warnings about non-contiguous clauses for is_clean
+:- discontiguous is_clean/1.
+% Facts: Water quality
+is_contaminated(water).
+is_clean(water) :- not(is_contaminated(water)).
+% Methods of purification
+purify_with_filter(water) :- is_contaminated(water), filter_used(water).
+purify_with_boiling(water) :- is_contaminated(water), boil_used(water).
+purify_with_chemical(water) :- is_contaminated(water), chemical_used(water).
+% Steps for purification (filter, boil, chemical treatment)
+filter_used(water).
+boil_used(water).
+chemical_used(water).
+% After applying a method, water becomes clean
+is_clean(water) :-
+ purify_with_filter(water);
+ purify_with_boiling(water);
+ purify_with_chemical(water).
+% Example of water status after purification
+is_clean(water) :- purify_with_filter(water).
+is_clean(water) :- purify_with_boiling(water).
+is_clean(water) :- purify_with_chemical(water).
 
 UCS
 
