@@ -23,6 +23,27 @@ grandfather(X, Y) :- male(X), grandparent(X, Y).
 grandmother(X, Y) :- female(X), grandparent(X, Y).
 
 
+AC PROLOG
+% Temperature Readings 
+temperature(living_room, 30). 
+temperature(bedroom, 25). 
+temperature(office, 28). 
+% Humidity Levels 
+humidity(living_room, 70). 
+humidity(bedroom, 50). 
+humidity(office, 65). 
+ 
+% Rule: Cooling is required if temperature is above 27°C 
+cooling_required(Room) :- 
+temperature(Room, Temp), 
+Temp > 27. 
+% Rule: Turn off AC if room is unoccupied and temperature is below 25°C 
+turn_off_ac(Room) :- 
+occupied(Room, no), 
+temperature(Room, Temp), 
+Temp < 25.
+
+
 
 UCS
 
