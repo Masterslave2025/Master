@@ -1,0 +1,224 @@
+Basic Prolog
+% Facts
+male(john).
+male(paul).
+male(david).
+female(mary).
+female(lisa).
+female(susan).
+
+parent(john, paul).
+parent(john, lisa).
+parent(mary, paul).
+parent(mary, lisa).
+parent(paul, david).
+parent(susan, david).
+
+% Rules
+father(X, Y) :- male(X), parent(X, Y).
+mother(X, Y) :- female(X), parent(X, Y).
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+grandfather(X, Y) :- male(X), grandparent(X, Y).
+grandmother(X, Y) :- female(X), grandparent(X, Y).
+
+
+
+UCS
+
+import heapq
+
+# Weighted Graph Definition
+weighted_graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('D', 2), ('E', 5)],
+    'C': [('F', 3)],
+    'D': [],
+    'E': [('F', 1)],
+    'F': []
+}
+
+# UCS Function
+def ucs(start, goal, graph):
+    visited = set()
+    queue = [(0, [start])]
+    while queue:
+        cost, path = heapq.heappop(queue)
+        node = path[-1]
+        if node == goal:
+            return path, cost
+        if node not in visited:
+            visited.add(node)
+            for neighbor, weight in graph[node]:
+                heapq.heappush(queue, (cost + weight, path + [neighbor]))
+
+# Example Usage
+print("UCS:", ucs('A', 'F', weighted_graph))
+
+
+
+
+
+DLS
+
+# Graph Definition
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# DLS Function
+def dls(node, goal, graph, limit, path=None):
+    if path is None:
+        path = []
+    path = path + [node]
+    if node == goal:
+        return path
+    if limit <= 0:
+        return None
+    for neighbor in graph[node]:
+        result = dls(neighbor, goal, graph, limit - 1, path)
+        if result:
+            return result
+    return None
+
+# Example Usage
+print("DLS:", dls('A', 'F', graph, 3))
+
+
+
+DFS
+# Graph Definition
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+# DFS Function
+def dfs(start, goal, graph):
+    visited = set()
+    stack = [[start]]
+    while stack:
+        path = stack.pop()
+        node = path[-1]
+        if node == goal:
+            return path
+        if node not in visited:
+            visited.add(node)
+            for neighbor in reversed(graph[node]):
+                stack.append(path + [neighbor])
+
+# Example Usage
+print("DFS:", dfs('A', 'F', graph))
+
+
+
+
+A*
+import numpy as np, heapq
+
+def print_board(b): print('\n'.join(' '.join(str(x) if x else '_' for x in row) for row in b), '\n')
+
+class Puzzle:
+    def __init__(s, board, parent=None, move="", depth=0): 
+        s.b, s.p, s.m, s.d = board, parent, move, depth
+        s.c = s.d + s.h(goal)
+
+    def __lt__(s, o): return s.c < o.c
+
+    def pos(s): x, y = np.where(s.b == 0); return x[0], y[0]
+
+    def h(s, g):
+        dist = 0
+        for i in range(3):
+            for j in range(3):
+                v = s.b[i][j]
+                if v != 0:
+                    gx, gy = np.where(g == v)
+                    dist += abs(gx[0] - i) + abs(gy[0] - j)
+        return dist
+
+    def neighbors(s): 
+        x, y = s.pos()
+        moves = {"Up": (x-1,y), "Down": (x+1,y), "Left": (x,y-1), "Right": (x,y+1)}
+        n = []
+        for m, (nx, ny) in moves.items():
+            if 0<=nx<3 and 0<=ny<3:
+                b = s.b.copy()
+                b[x,y], b[nx,ny] = b[nx,ny], b[x,y]
+                n.append(Puzzle(b, s, m, s.d+1))
+        return n
+
+def a_star(start, g):
+    openl, closed = [], set()
+    heapq.heappush(openl, (start.c, start))
+    while openl:
+        _, cur = heapq.heappop(openl)
+        print_board(cur.b)
+        if np.array_equal(cur.b, g): 
+            print("Goal reached in", cur.d, "moves")
+            path = []
+            while cur.p: path.append(cur.m); cur = cur.p
+            return path[::-1]
+        closed.add(tuple(cur.b.flatten()))
+        for n in cur.neighbors():
+            if tuple(n.b.flatten()) not in closed:
+                heapq.heappush(openl, (n.c, n))
+    return None
+
+# Input
+start = np.array([list(map(int, input("Row: ").split())) for _ in range(3)])
+goal = np.array([list(map(int, input("Goal Row: ").split())) for _ in range(3)])
+p = Puzzle(start)
+sol = a_star(p, goal)
+print("Moves:", sol if sol else "No solution")
+
+
+
+
+
+MX/MN
+
+import math
+
+B = [' '] * 9
+W = [(0,1,2),(3,4,5),(6,7,8),(0,3,6),(1,4,7),(2,5,8),(0,4,8),(2,4,6)]
+
+def show(): [print(B[i],'|',B[i+1],'|',B[i+2]) for i in [0,3,6]]
+def win(p): return any(B[x]==B[y]==B[z]==p for x,y,z in W)
+
+def mini(b, maxp):
+    if win('X'): return 1
+    if win('O'): return -1
+    if ' ' not in b: return 0
+    scores = []
+    for i in range(9):
+        if b[i]==' ':
+            b[i]='X' if maxp else 'O'
+            scores.append(mini(b, not maxp))
+            b[i]=' '
+    return max(scores) if maxp else min(scores)
+
+def best():
+    moves = {i: mini(B, False) for i in range(9) if B[i]==' '}
+    return max(moves, key=moves.get)
+
+while True:
+    show()
+    if win('X'): print("AI wins!"); break
+    if win('O'): print("You win!"); break
+    if ' ' not in B: print("Draw!"); break
+
+    p = int(input("Enter move (0-8): "))
+    if B[p]!=' ': print("Invalid!"); continue
+    B[p]='O'
+    if win('O') or ' ' not in B: continue
+    B[best()]='X'
