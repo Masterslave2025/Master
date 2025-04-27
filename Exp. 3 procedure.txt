@@ -1,0 +1,11 @@
+1. Open the Nuvoton ISP software.
+
+2. Select UART as connection interface. Then from the dropdown of scan port, select the port on which 8051 board is connected.
+
+3. Click on the “connect” button then click on the reset button of the nuvoton board. It will show connected status.
+
+4. Select the bin file of the experiment saved at : D:\8051_total_4exp_D11\SampleCode\RegBased\GPIO_Input_Output \Keil\GPIO_Input_Output.bin
+
+5. Select the APROM checkfield in the programming section.
+
+6. Click Start button

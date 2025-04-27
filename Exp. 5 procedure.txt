@@ -1,0 +1,7 @@
+1. Open Arduino IDE
+2. Select Board Nucleo-64
+3. Select Part Nucleo F401RE.
+4. Connect STM32 Board with computer and check the port used under tools section.
+5. Select Port number accordingly
+6. Make necessary breadboard connections with board Pins and LEDs.
+7. Upload the code and observe the output

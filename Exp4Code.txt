@@ -1,0 +1,21 @@
+#include "ms51_32k.h"
+bit ADC_CONT_FINAL_FLAG;
+void main (void)
+	{
+		unsigned int temp;
+		MODIFY_HIRC(HIRC_24);
+		P06_PUSHPULL_MODE;
+		UART_Open(24000000,UART0_Timer3,115200);
+		ENABLE_UART0_PRINTF;
+		ENABLE_ADC_CH9;
+		Potentiometer while(1)
+					{
+						Timer2_Delay(24000000,128,300,1000);
+						clr_ADCCON0_ADCF;
+						set_ADCCON0_ADCS;
+							while(ADCF == 0);
+								temp=(ADCRH<<4)+(ADCRL&0x0F);
+							printf ("\n ADC Value = 0x%02X", temp);
+							P35 ^= 1;
+					}
+	}

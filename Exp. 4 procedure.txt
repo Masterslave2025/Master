@@ -1,0 +1,27 @@
+1. Open the project file as per path: D:\8051_total_4exp_D11\SampleCode\RegBased\ADC_Simple\Keil\ADC_Simple.bin.
+
+2. Connect the board with CPU and Open Nuvoton ISP programming tool.
+
+3. Select UART under the drop down menu and scan & select Com Port.
+
+4. Click connect and press the reset button on 8051 board.
+
+5. Click APROM File option then browse and select the new Bin file generated in your main project folder (D-drive).
+
+6. Select the checkbox of APROM and Reset and Run.
+
+7. Click Start to upload the code.
+
+8. Open Arduino IDE, and select the same port selected in the nuvoton programming tool.
+
+9. Open the serial monitor and set the baud rate to 115200.
+
+10. Check for the data printed on the serial monitor.
+
+11. Vary the POTENTIOMETER / light falling on LDR sensor and observe the change in Output
+
+OUTPUT:
+1.Select UART and COM3 in connection interface.
+2.Load file – APROM (load the file path).
+3.Select APROM in the programming section.
+4.Select 8 bits and status – connect

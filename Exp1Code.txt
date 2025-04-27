@@ -1,0 +1,11 @@
+#include "ms51_32k.h"
+void main (void)
+{
+MODIFY_HIRC(HIRC_24);
+Enable_UART0_VCOM_printf_24M_115200();
+while(1)
+{
+printf("\n Hello !");
+Timer0_Delay(24000000,300,1000);
+}
+}

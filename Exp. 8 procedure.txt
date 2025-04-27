@@ -1,0 +1,6 @@
+1. Open Arduino IDE
+2. Select Board Nucleo-64
+3. Connect STM32 Board with computer.
+4. Select Port number accordingly
+5. Make necessary breadboard connections with board Pins and LEDs.
+6. Upload the code and observe the output.

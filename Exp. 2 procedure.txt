@@ -1,0 +1,17 @@
+1. Prepare and Connect
+- Connect the Nuvoton 8051 board to your PC via the appropriate interface.
+- Launch the Nuvoton ISP software.
+- In the connection settings, select UART.
+- Click Connect and immediately press the board's Reset button. Once connected, the software will display a "Connected" status.
+
+2. Load the Binary File
+- Click on the file selection button and load the binary file located at: D:\8051_total_4exp_D11\SampleCode\RegBased\GPIO_Input_Output\Keil\GPIO_Input_Output.bin
+- In the programming section, check the APROM option to ensure the main application area is targeted.
+
+3. Program the Board
+- Click the Start/Program button to begin the upload process.
+- If prompted, press the reset button on the board again to initiate programming.
+- Once programming starts and completes, the board will automatically run the new code.
+
+4. Verify the Output
+After the programming process, the buzzer on the board will start ringing, confirming that the code has been successfully uploaded and is running.

@@ -1,0 +1,27 @@
+1. Connect the MS51PC0AE development board to the power supply and establish a UART connection to your PC.
+
+2. Open Keil uVision IDE, create a new project, and select the 8051 microcontroller (MS-51PC0AE).
+
+3. Write the C code to initialize the UART and transmit data.
+
+4. Compile the code and check for errors.
+
+5. Load the compiled code onto the MS51PC0AE using a suitable programmer.
+
+	a. Open NuvoISP
+
+	b. In Connection Interface, choose “UART” and the COM port accordingly.
+
+	c. Press “Reset Button” on the board
+
+	d. Load the bin file by clicking on “APROM”
+
+	e. The relative path will be similar to: “8051_D11_EXPERIMENTS\SampleCode\RegBased\UART0_Printf\Keil\Output\UART0_Printf.bin”
+
+	f. Select APROM under the Programming section at the Bottom
+
+	g. Click “Start”
+
+6. Open a serial terminal on the PC (Arduino IDE), set the baud rate, and connect to the correct COM port.
+
+7. Run the program, and observe the transmitted data on the terminal.

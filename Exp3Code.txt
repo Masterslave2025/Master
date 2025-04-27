@@ -1,0 +1,46 @@
+#include "ms51_32k.h"
+unsigned int counter =0;
+void UART0_Init(void)
+	{
+		P06_QUASI_MODE;
+		P07_QUASI_MODE;
+		SCON = 0x50;
+		TMOD |= 0x20;
+		set_PCON_SMOD;
+		set_T3CON_BRCK;
+		TH1 = 256 - (24000000/16/9600);
+		set_TCON_TR1;
+	}
+	
+void UART0_Send_Char(char c)
+	{
+		SBUF = c;
+			while (!TI);
+				TI = 0;
+	}
+
+void UART0_Send_String(char*str)
+	{
+		while (*str)
+			{
+				UART0_Send_Char(*str++);
+		}
+	}
+void UART0_Send_Number(unsigned int num)
+	{
+		char buffer[6];
+		sprintf(buffer,"%u", num);
+		UART0_Send_String(buffer);
+	}
+void main(void)
+	{
+		MODIFY_HIRC(HIRC_24);
+		UART0_Init();
+		while (1)
+			{
+				UART0_Send_String("Counter: ");
+				UART0_Send_Number(counter);
+				UART0_Send_String("\r\n");
+				counter++;
+				Timer0_Delay1ms(1000);}
+			}
